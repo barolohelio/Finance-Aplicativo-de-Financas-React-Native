@@ -1,4 +1,5 @@
 import React from "react";
+import { ListRenderItem } from "react-native";
 
 import { HighlightCard } from "../../components/HighlightCard";
 import {
@@ -27,7 +28,8 @@ export interface DataListProps extends TransactionCardProps {
 }
 
 export function Dashboard() {  
-  const data: DataListProps[] = [
+  const renderItem: ListRenderItem<DataListProps> = ({item}) => <TransactionCard data={item} />;
+  const data = [
     {
       id: "1",
       type: "positive",
@@ -107,8 +109,8 @@ export function Dashboard() {
         <Title>Listagem</Title>
         <TransactionsList 
           data={data}
-          keyExtractor={item => item.id}
-          renderItem={({item}) => <TransactionCard data={item} />}
+          renderItem={renderItem}
+          keyExtractor={(item: DataListProps) => item.id}
         />
 
       </Transactions>

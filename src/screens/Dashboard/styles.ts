@@ -92,13 +92,10 @@ export const Title = styled.Text`
   color: ${({ theme }) => theme.colors.text_dark};  
 `;
 
-export const TransactionsList = styled(
-      FlatList as new () => FlatList<DataListProps>
-      ).attrs({
+export const TransactionsList = styled.FlatList.attrs({
       showsVerticalScrollIndicator: false,
       contentContainerStyle: {
       paddingBottom: getBottomSpace()
-    }
-  })``;
+    }})``;
 
 
