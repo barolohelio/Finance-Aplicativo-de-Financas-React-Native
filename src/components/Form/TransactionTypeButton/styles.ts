@@ -27,6 +27,8 @@ export const Container = styled(TouchableOpacity)<ContainerProps>`
   
   padding: 16px;
 
+  margin-top: 8px;
+
   ${({isActive, type}) => isActive && type === 'down' && css`
     background-color: ${({theme}) => theme.colors.attention_light};
   `}
@@ -34,8 +36,6 @@ export const Container = styled(TouchableOpacity)<ContainerProps>`
   ${({isActive, type}) => isActive && type === 'up' && css`
     background-color: ${({theme}) => theme.colors.success_light};
   `}
-
-
 `;
 
 export const Title = styled.Text`

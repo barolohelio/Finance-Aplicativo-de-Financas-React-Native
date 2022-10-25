@@ -16,9 +16,8 @@ export const Header = styled.View`
   align-items: center;
   justify-content: flex-end;
   padding-bottom: 20px;
-
-  margin-bottom: 24px;
 `;
+
 export const Title = styled.Text`
   color: ${({ theme }) => theme.colors.shape};
   font-family: ${({ theme }) => theme.fonts.regular};
