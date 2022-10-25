@@ -21,6 +21,7 @@ import {
   Transactions,
   Title,
   TransactionsList,
+  LogoutButton
 } from "./styles";
 
 export interface DataListProps extends TransactionCardProps {
@@ -33,7 +34,7 @@ export function Dashboard() {
     {
       id: "1",
       type: "positive",
-      title: "Desenvolvimento de Site",
+      title: "Corsa 2008",
       amount: "R$ 12.000,00",
       category: {
         name: "Vendas",
@@ -44,7 +45,7 @@ export function Dashboard() {
     {
       id: "2",
       type: "negative",
-      title: "Hamburgueria Pizzy",
+      title: "Capitão Burger",
       amount: "R$ 59,00",
       category: {
         name: "Alimentação",
@@ -72,7 +73,7 @@ export function Dashboard() {
           <UserInfo>
             <Photo
               source={{
-                uri: "https://avatars.githubusercontent.com/u/106620493?v=4",
+                uri: "https://avatars.githubusercontent.com/u/63430740?v=4",
               }}
             />
             <User>
@@ -80,7 +81,10 @@ export function Dashboard() {
               <UserName>André</UserName>
             </User>
           </UserInfo>
-          <Icon name="power" />
+          
+          <LogoutButton onPress={() => {}}>
+            <Icon name="power" />
+          </LogoutButton>
         </UserWrapper>
       </Header>
 
