@@ -47,7 +47,6 @@ export function Register({navigation}: {navigation: NavigationProps}) {
   const [transactionType, setTransactionType] = useState("");
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
 
-  const dataKey = "@gofinances:transactions";
 
   const [category, setCategory] = useState({
     key: "category",
@@ -63,7 +62,7 @@ export function Register({navigation}: {navigation: NavigationProps}) {
     resolver: yupResolver(schema),
   });
 
-  function handleTransactionsTypeSelect(type: "up" | "down") {
+  function handleTransactionsTypeSelect(type: "positive" | "negative") {
     setTransactionType(type);
   }
 
@@ -85,20 +84,20 @@ export function Register({navigation}: {navigation: NavigationProps}) {
       id: String(uuid.v4()),
       name: form.name, 
       amount: form.amount,
-      transactionType,
+      type: transactionType,
       category: category.key,
       date: new Date()
     };
 
     try {
+      const dataKey = "@gofinances:transactions";
+
       const data = await AsyncStorage.getItem(dataKey);
       const currentData = data ? JSON.parse(data) : [];
 
       const dataFormatted = [...currentData, newTransaction];
 
       await AsyncStorage.setItem(dataKey, JSON.stringify(dataFormatted));
-
-     
       reset();
       setTransactionType('');
       setCategory({
@@ -160,14 +159,14 @@ export function Register({navigation}: {navigation: NavigationProps}) {
               <TransactionTypeButton
                 title="Entrada"
                 type="up"
-                onPress={() => handleTransactionsTypeSelect("up")}
-                isActive={transactionType == "up"}
+                onPress={() => handleTransactionsTypeSelect("positive")}
+                isActive={transactionType == "positive"}
               />
               <TransactionTypeButton
                 title="Saída"
                 type="down"
-                onPress={() => handleTransactionsTypeSelect("down")}
-                isActive={transactionType == "down"}
+                onPress={() => handleTransactionsTypeSelect("negative")}
+                isActive={transactionType == "negative"}
               />
             </TransactionsTypes>
 
