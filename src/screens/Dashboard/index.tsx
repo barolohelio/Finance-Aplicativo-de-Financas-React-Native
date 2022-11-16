@@ -28,6 +28,7 @@ import {
   LogoutButton,
   LoadContainer
 } from "./styles";
+import { useAuth } from "../../hooks/auth";
 
 export interface DataListProps extends TransactionCardProps {
   id: string;
@@ -46,14 +47,20 @@ interface HighlightData {
 
 export function Dashboard() {  
   const theme = useTheme();
+  const {signOut, user} = useAuth();
 
   function getLastTransactionDate(
       collection: DataListProps[],
       type: 'positive' | 'negative'
   ){
+    const collectionFiltered = collection
+      .filter(transaction => transaction.type === type); 
+
+      if (collectionFiltered.length === 0)
+        return 0;
+
     const lastTransaction = new Date(
-    Math.max.apply(Math, collection
-    .filter((transaction)  => transaction.type === 'positive')
+    Math.max.apply(Math, collectionFiltered
     .map((transaction)  => new Date (transaction.date).getTime())
     ));
 
@@ -68,7 +75,7 @@ export function Dashboard() {
   const [highlightData, setHighLightData] = useState<HighlightData>({} as HighlightData);
 
   async function loadTransaction(){
-    const dataKey = "@gofinances:transactions";
+    const dataKey = `@gofinances:transactions_user:${user.id}`;
     const response = await AsyncStorage.getItem(dataKey);
     const transactions = response ? JSON.parse(response) : [];
 
@@ -83,7 +90,6 @@ export function Dashboard() {
         } else {
           expensivesTotal += Number(item.amount);
         }
-
 
       // Conversão para numero e depois utiliza moeda local do Brasil
       // https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Number/toLocaleString
@@ -114,8 +120,11 @@ export function Dashboard() {
     
     const lastTransactionsEntries = getLastTransactionDate(transactions, 'positive');
     const lastTransactionsExpensives = getLastTransactionDate(transactions, 'negative');
-    const totalInterval = `01 a ${lastTransactionsExpensives}`
 
+    const totalInterval = lastTransactionsExpensives === 0 
+    ? 'Nao há transações'
+    : `01 a ${lastTransactionsExpensives}`
+    
     // console.log(lastTransactionEntries);
 
     const total = entriesTotal - expensivesTotal;
@@ -126,14 +135,18 @@ export function Dashboard() {
           style: 'currency',
           currency: 'BRL'
         }),
-        lastTransaction: `Última entrada dia ${lastTransactionsEntries}`
+        lastTransaction: lastTransactionsEntries === 0 
+        ? 'Nao há transações'
+        :  `Última entrada dia ${lastTransactionsEntries}`
       },
       expensives: {
         amount: expensivesTotal.toLocaleString('pt-BR', {
           style: 'currency',
           currency: 'BRL'
         }),
-        lastTransaction: `Última saída dia ${lastTransactionsExpensives}`
+        lastTransaction: lastTransactionsExpensives === 0
+        ? 'Nao há transações'
+        : `Última saída dia ${lastTransactionsExpensives}`
       },
       total: {
         amount: total.toLocaleString('pt-BR', {
@@ -150,8 +163,8 @@ export function Dashboard() {
   useEffect(() => {
     loadTransaction();
 
-    // const dateKey = "@gofinances:transactions";
-    // AsyncStorage.removeItem(dateKey);
+    //  const dateKey = `@gofinances:transactions_user:${user.id}`;
+    //  AsyncStorage.removeItem(dateKey);
   }, [])
 
   useFocusEffect(useCallback(() => {
@@ -174,16 +187,16 @@ export function Dashboard() {
               <UserInfo>
                 <Photo
                   source={{
-                    uri: "https://avatars.githubusercontent.com/u/63430740?v=4",
+                    uri: user.photo,
                   }}
                 />
                 <User>
                   <UserGreeting>Olá, </UserGreeting>
-                  <UserName>André</UserName>
+                  <UserName>{user.name}</UserName>
                 </User>
               </UserInfo>
               
-              <LogoutButton onPress={() => {}}>
+              <LogoutButton onPress={signOut}>
                 <Icon name="power" />
               </LogoutButton>
             </UserWrapper>
