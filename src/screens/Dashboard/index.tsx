@@ -129,7 +129,7 @@ export function Dashboard() {
 
     const total = entriesTotal - expensivesTotal;
 
-    if(total <= 0){
+    if(total < 0){
       Alert.alert(`ATENÇÃO VOCE GASTOU ACIMA DO SEU SALDO \n SALDO:  ${total}`)
     }
 
@@ -165,10 +165,10 @@ export function Dashboard() {
   }
 
   useEffect(() => {
-    loadTransaction();
+     loadTransaction();
 
-    //  const dateKey = `@gofinances:transactions_user:${user.id}`;
-    //  AsyncStorage.removeItem(dateKey);
+      // const dateKey = `@gofinances:transactions_user:${user.id}`;
+      // AsyncStorage.removeItem(dateKey);
   }, [])
 
   useFocusEffect(useCallback(() => {

@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button } from '../../components/Form/Button';
-
 import {useTheme} from 'styled-components'
 
 import { 
@@ -12,11 +11,9 @@ import {
 } from './styles';
 import { Input } from '../../components/Form/Input';
 
-
 interface Props {
   closeSelectCategory: () => void;
 }
-
 
 export function SpendingAlert({ 
   closeSelectCategory,
@@ -27,7 +24,7 @@ export function SpendingAlert({
   return (
     <Container>
       <Header>
-        <Title>Alerta</Title>
+        <Title>Defina um limite de saída</Title>
       </Header>
       <Form>
 
