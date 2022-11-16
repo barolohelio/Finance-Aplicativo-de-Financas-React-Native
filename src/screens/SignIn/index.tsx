@@ -53,9 +53,9 @@ export function SignIn() {
     <Container>
       <Header>
         <TitleWrapper>
-          <LogoSvg width={RFValue(120)} height={RFValue(68)} />
+          <LogoSvg width={RFValue(240)} height={RFValue(136)} />
           <Title>
-            Controle suas {"\n"} finanças de forma{"\n"} muito simples
+            Controle e {"\n"} organize {"\n"} seu dinheiro!
           </Title>
         </TitleWrapper>
         <SignInTitle>

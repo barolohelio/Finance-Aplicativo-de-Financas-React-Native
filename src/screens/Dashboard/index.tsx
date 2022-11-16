@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { ListRenderItem, ActivityIndicator } from "react-native";
+import { ListRenderItem, ActivityIndicator, Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { useFocusEffect } from "@react-navigation/native";
@@ -128,6 +128,10 @@ export function Dashboard() {
     // console.log(lastTransactionEntries);
 
     const total = entriesTotal - expensivesTotal;
+
+    if(total <= 0){
+      Alert.alert(`ATENÇÃO VOCE GASTOU ACIMA DO SEU SALDO \n SALDO:  ${total}`)
+    }
 
     setHighLightData({
       entries: {

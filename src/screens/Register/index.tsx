@@ -15,6 +15,9 @@ import {
   Form,
   Fields,
   TransactionsTypes,
+  UserWrapper,
+  AlertButton,
+  Icon,
 } from "./styles";
 
 import { Button } from "../../components/Form/Button";
@@ -25,6 +28,7 @@ import { CategorySelectButton } from "../../components/Form/CategorySelectButton
 import { CategorySelect } from "../CategorySelect";
 import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "../../hooks/auth";
+import { SpendingAlert } from "../SpendingAlert/SpendingAlert";
 
 interface FormData {
   name: string;
@@ -47,6 +51,8 @@ const schema = yup.object().shape({
 export function Register({navigation}: {navigation: NavigationProps}) {
   const [transactionType, setTransactionType] = useState("");
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
+  const [spendingAlertOpen, setSpendingAlertOpen] = useState(false);
+
 
   const {user} =  useAuth();
 
@@ -75,6 +81,14 @@ export function Register({navigation}: {navigation: NavigationProps}) {
 
   function handleCloseSelectCategoryModal() {
     setCategoryModalOpen(false);
+  }
+
+  function handleOpenSpendingAlert(){
+    setSpendingAlertOpen(true);
+  }
+
+  function handleCloseSpendingAlert(){
+    setSpendingAlertOpen(false);
   }
 
   async function handleRegister(form: FormData) {
@@ -137,7 +151,13 @@ export function Register({navigation}: {navigation: NavigationProps}) {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
         <Header>
+          <UserWrapper>
           <Title>Cadastro</Title>
+
+            <AlertButton onPress={handleOpenSpendingAlert}>
+                <Icon name="bell"/>
+            </AlertButton>
+            </UserWrapper>
         </Header>
 
         <Form>
@@ -187,6 +207,12 @@ export function Register({navigation}: {navigation: NavigationProps}) {
             category={category}
             setCategory={setCategory}
             closeSelectCategory={handleCloseSelectCategoryModal}
+          />
+        </Modal>
+
+        <Modal visible={spendingAlertOpen}>
+          <SpendingAlert 
+            closeSelectCategory={handleCloseSpendingAlert}
           />
         </Modal>
       </Container>
