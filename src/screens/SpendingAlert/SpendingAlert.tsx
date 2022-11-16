@@ -1,17 +1,16 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
-import { Control, FieldValues, useForm } from 'react-hook-form';
-import schema from 'yup/lib/schema';
-
 import { Button } from '../../components/Form/Button';
-import { InputForm } from '../../components/Form/InputForm';
+
+import {useTheme} from 'styled-components'
 
 import { 
   Container,
   Header,
   Title,
-  Footer,
+  Form,
+  Footer
 } from './styles';
+import { Input } from '../../components/Form/Input';
 
 
 interface Props {
@@ -19,28 +18,32 @@ interface Props {
 }
 
 
-
-
-
 export function SpendingAlert({ 
   closeSelectCategory,
 }: Props) {
 
+  const theme = useTheme();
 
   return (
     <Container>
       <Header>
         <Title>Alerta</Title>
       </Header>
- 
-   
+      <Form>
 
-      <Footer>
-        <Button 
-          title='Selecionar'
-          onPress={closeSelectCategory}
+        <Input
+           placeholder="Definir alerta"
+           placeholderTextColor={theme.colors.text}
+           keyboardType="numeric"
         />
-      </Footer>
+
+        <Footer>
+          <Button
+            title='Criar Alerta'
+            onPress={closeSelectCategory}
+          />
+        </Footer>
+      </Form>
     </Container>
   );
 }

@@ -89,6 +89,7 @@ export function Register({navigation}: {navigation: NavigationProps}) {
 
   function handleCloseSpendingAlert(){
     setSpendingAlertOpen(false);
+    Alert.alert("Alerta criado com sucesso!!")
   }
 
   async function handleRegister(form: FormData) {

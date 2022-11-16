@@ -42,31 +42,20 @@ export const Category = styled.TouchableOpacity<CategoryProps>`
   }
 `;
 
-export const Icon = styled(Feather)`
-  font-size: ${RFValue(20)}px;
-  margin-right: 16px;
-`;
-export const Name = styled.Text`
-  font-family: ${({ theme }) => theme.fonts.regular};
-  font-size: ${RFValue(14)}px;
-`;
-
 export const Separator = styled.View`
   height: 1px;
   width: 100%;
   background-color: ${({ theme }) => theme.colors.text};
 `;
 
-export const Footer = styled.View`
+export const Form = styled.View`
+  flex: 1;
   width: 100%;
+
   padding: 24px;
 `;
 
-export const Form = styled.View`
-  flex: 1;
-  justify-content: space-between;
-  width: 100%;
-
-  padding: 24px;
+export const Footer = styled.View`
+  margin-top: 12px;
 `;
 
